@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submiflow | Submit with Ease</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #17243a;
+      line-height: 1.6;
+    }
+
+    header {
+      background: #102442;
+      color: white;
+      padding: 22px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+
+    .logo span {
+      color: #e5b85c;
+    }
+
+    .hero {
+      background: #102442;
+      color: white;
+      text-align: center;
+      padding: 65px 20px 85px;
+    }
+
+    .hero h1 {
+      font-size: 36px;
+      margin-bottom: 14px;
+    }
+
+    .hero p {
+      color: #d5deeb;
+      max-width: 520px;
+      margin: auto;
+      font-size: 16px;
+    }
+
+    .form-section {
+      max-width: 620px;
+      margin: -40px auto 60px;
+      padding: 0 18px;
+    }
+
+    .form-card {
+      background: white;
+      padding: 32px 26px;
+      border-radius: 14px;
+      box-shadow: 0 8px 35px rgba(16, 36, 66, 0.10);
+    }
+
+    .form-card h2 {
+      font-size: 24px;
+      margin-bottom: 7px;
+    }
+
+    .intro {
+      color: #68758a;
+      margin-bottom: 25px;
+      font-size: 14px;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin: 17px 0 7px;
+      font-size: 14px;
+    }
+
+    .required {
+      color: #d33b3b;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #d8deea;
+      border-radius: 7px;
+      font-size: 15px;
+      background: white;
+      color: #17243a;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #c99a3d;
+      box-shadow: 0 0 0 2px rgba(201, 154, 61, 0.12);
+    }
+
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    .consent {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      margin-top: 20px;
+      font-size: 13px;
+      color: #59677b;
+    }
+
+    .consent input {
+      width: auto;
+      margin-top: 4px;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 24px;
+      padding: 15px;
+      background: #c99a3d;
+      color: #102442;
+      border: none;
+      border-radius: 7px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    #status {
+      margin-top: 15px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px 15px;
+      color: #7b8798;
+      font-size: 13px;
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 {
+        font-size: 29px;
+      }
+
+      .form-card {
+        padding: 26px 19px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">Submi<span>flow</span></div>
+  </header>
+
+  <section class="hero">
+    <h1>Simple. Secure. Seamless.</h1>
+    <p>Welcome to Submiflow. Complete the form below to submit your information quickly and easily.</p>
+  </section>
+
+  <section class="form-section">
+    <div class="form-card">
+      <h2>Submission Form</h2>
+      <p class="intro">Please complete all required fields.</p>
+
+      <form id="submissionForm">
+
+        <label for="fullname">Full Name <span class="required">*</span></label>
+        <input type="text" id="fullname" name="fullname"
+          placeholder="Enter your full name" required>
+
+        <label for="email">Email Address <span class="required">*</span></label>
+        <input type="email" id="email" name="email"
+          placeholder="Enter your email address" required>
+
+        <label for="phone">Phone Number <span class="required">*</span></label>
+        <input type="tel" id="phone" name="phone"
+          placeholder="Enter your phone number" required>
+
+        <label for="package">Select Package <span class="required">*</span></label>
+        <select id="package" name="package" required>
+          <option value="">Choose a package</option>
+          <option value="Basic">Basic Package</option>
+          <option value="Standard">Standard Package</option>
+          <option value="Premium">Premium Package</option>
+        </select>
+
+        <label for="message">Additional Information</label>
+        <textarea id="message" name="message"
+          placeholder="Write any additional information here..."></textarea>
+
+        <label class="consent">
+          <input type="checkbox" name="consent" required>
+          <span>I confirm that the information I provided is accurate.</span>
+        </label>
+
+        <button type="submit" id="submitButton">Submit Form</button>
+
+        <p id="status" role="status"></p>
+
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    © 2026 Submiflow. All rights reserved.
+  </footer>
+
+  <script>
+    const form = document.getElementById("submissionForm");
+    const button = document.getElementById("submitButton");
+    const statusMessage = document.getElementById("status");
+
+    // We will connect this to the secure backend later.
+    const API_URL = "https://YOUR-BACKEND-URL.onrender.com/api/submit";
+
+    form.addEventListener("submit", async function(event) {
+      event.preventDefault();
+
+      button.disabled = true;
+      button.textContent = "Submitting...";
+      statusMessage.textContent = "";
+
+      const formData = Object.fromEntries(new FormData(form).entries());
+
+      try {
+        const response = await fetch(API_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(formData)
+        });
+
+        if (!response.ok) {
+          throw new Error("Submission failed");
+        }
+
+        statusMessage.textContent = "Your submission was received successfully!";
+        statusMessage.style.color = "green";
+        form.reset();
+
+      } catch (error) {
+        statusMessage.textContent =
+          "Submission service is not connected yet. Please try again later.";
+        statusMessage.style.color = "#c0392b";
+
+      } finally {
+        button.disabled = false;
+        button.textContent = "Submit Form";
+      }
+    });
+  </script>
+
+</body>
+</html>
